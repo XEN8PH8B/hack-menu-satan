@@ -52,6 +52,7 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
+            OTHER_LDFLAGS='$(inherited) -framework QuartzCore -framework Metal -framework MetalKit -framework UIKit' \
             build
 
           # Создаем структуру IPA (Payload/*.app)
