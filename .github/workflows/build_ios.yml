@@ -36,7 +36,11 @@ jobs:
       - name: Export Godot iOS Project
         run: |
           mkdir -p export
-          godot --headless --export-debug "iOS" export/satan.zip
+          # Проверяем наличие установленных шаблонов
+          ls -la ~/Library/Application\ Support/Godot/export_templates/ || true
+          ls -la ~/Library/Application\ Support/Godot/templates/ || true
+          # Запуск экспорта с подробным выводом ошибок
+          godot --headless --verbose --export-debug "iOS" export/satan.zip
           mkdir -p export/xcode
           unzip -q export/satan.zip -d export/xcode
 
