@@ -52,7 +52,8 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
-            OTHER_LDFLAGS='$(inherited) -framework QuartzCore -framework Metal -framework MetalKit -framework UIKit' \
+            IPHONEOS_DEPLOYMENT_TARGET=17.0 \
+            OTHER_LDFLAGS='$(inherited) -framework QuartzCore -framework Metal -framework MetalKit -framework UIKit -Wl,-U,_CADynamicRangeAutomatic -Wl,-U,_CADynamicRangeConstrainedHigh -Wl,-U,_CADynamicRangeHigh -Wl,-U,_CADynamicRangeStandard -Wl,-U,_MTLTensorDomain' \
             build
 
           # Создаем структуру IPA (Payload/*.app)
