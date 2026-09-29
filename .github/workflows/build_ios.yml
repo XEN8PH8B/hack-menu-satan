@@ -5,6 +5,9 @@ on:
   push:
     branches: [ main, master ]
 
+permissions:
+  contents: write
+
 jobs:
   build-ipa:
     runs-on: macos-14
@@ -15,7 +18,7 @@ jobs:
       - name: Setup Godot 4
         uses: chickensoft-games/setup-godot@v2
         with:
-          version: 4.3.0
+          version: 4.7.2
           use-dotnet: false
           include-templates: true
 
@@ -64,3 +67,13 @@ jobs:
           name: SATAN-iOS-IPA
           path: ipa_output/SATAN.ipa
           retention-days: 7
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "SATAN iOS IPA (v1.0.0)"
+          body: "Свежая сборка SATAN для iOS (iPhone 12 Pro). Готово для установки через Sideloadly."
+          files: ipa_output/SATAN.ipa
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

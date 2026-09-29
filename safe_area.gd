@@ -96,15 +96,22 @@ func update_margins() -> void:
 	if has_real_safe_area:
 		# Переводим координаты экрана в координаты Viewport с учётом масштабирования
 		var vp := get_viewport()
-		var xform: Transform2D = vp.get_final_transform().affine_inverse()
-		var safe_top_left := xform * Vector2(safe_area.position)
-		var safe_bottom_right := xform * Vector2(safe_area.end)
-		var vp_rect := vp.get_visible_rect()
+		if vp:
+			var final_xform := vp.get_final_transform()
+			var det := final_xform.determinant()
+			if not is_zero_approx(det):
+				var xform: Transform2D = final_xform.affine_inverse()
+				var safe_top_left := xform * Vector2(safe_area.position)
+				var safe_bottom_right := xform * Vector2(safe_area.end)
+				var vp_rect := vp.get_visible_rect()
 
-		m_top = maxi(0, int(round(safe_top_left.y - vp_rect.position.y)))
-		m_bottom = maxi(0, int(round(vp_rect.end.y - safe_bottom_right.y)))
-		m_left = maxi(0, int(round(safe_top_left.x - vp_rect.position.x)))
-		m_right = maxi(0, int(round(vp_rect.end.x - safe_bottom_right.x)))
+				m_top = maxi(0, int(round(safe_top_left.y - vp_rect.position.y)))
+				m_bottom = maxi(0, int(round(vp_rect.end.y - safe_bottom_right.y)))
+				m_left = maxi(0, int(round(safe_top_left.x - vp_rect.position.x)))
+				m_right = maxi(0, int(round(vp_rect.end.x - safe_bottom_right.x)))
+			else:
+				m_top = mock_top
+				m_bottom = mock_bottom
 	elif simulate_on_desktop:
 		# Режим симуляции для тестирования интерфейса на ПК / в редакторе
 		m_top = mock_top
