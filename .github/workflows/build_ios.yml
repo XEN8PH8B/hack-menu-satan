@@ -21,7 +21,7 @@ jobs:
 
       - name: Prepare Clean Project for Export
         run: |
-          # Удаляем редакторские плагины AI для чистого игрового билда
+          # Удаляем редакторские плагины AI для чистого билда
           rm -rf addons
           python3 -c '
           with open("project.godot", "r") as f:
@@ -36,20 +36,13 @@ jobs:
       - name: Export Godot iOS Project
         run: |
           mkdir -p export
-          # Проверяем наличие установленных шаблонов
-          ls -la ~/Library/Application\ Support/Godot/export_templates/ || true
-          ls -la ~/Library/Application\ Support/Godot/templates/ || true
-          # Запуск экспорта с подробным выводом ошибок
           godot --headless --verbose --export-debug "iOS" export/satan.zip
-          mkdir -p export/xcode
-          unzip -q export/satan.zip -d export/xcode
 
       - name: Compile and Package IPA
         run: |
-          cd export/xcode
-          # Сборка проекта без подписи в Xcode
-          xcodebuild -project godot_apple_embedded.xcodeproj \
-            -scheme godot_apple_embedded \
+          # Компиляция в Xcode без подписи (для Sideloadly)
+          xcodebuild -project export/satan.xcodeproj \
+            -scheme satan \
             -configuration Debug \
             -destination 'generic/platform=iOS' \
             -derivedDataPath build \
@@ -58,13 +51,16 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             build
 
+          # Создаем структуру IPA (Payload/*.app)
           mkdir -p Payload
           cp -R build/Build/Products/Debug-iphoneos/*.app Payload/
           zip -qr SATAN.ipa Payload
+          mkdir -p ipa_output
+          mv SATAN.ipa ipa_output/
 
       - name: Upload IPA Artifact for Sideloadly
         uses: actions/upload-artifact@v4
         with:
           name: SATAN-iOS-IPA
-          path: export/xcode/SATAN.ipa
+          path: ipa_output/SATAN.ipa
           retention-days: 7
