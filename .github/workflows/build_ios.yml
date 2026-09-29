@@ -1,0 +1,53 @@
+name: Build iOS IPA (Sideloadly)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build-ipa:
+    runs-on: macos-14
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Godot 4
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.3.0
+          use-dotnet: false
+          include-templates: true
+
+      - name: Export Godot iOS Project
+        run: |
+          mkdir -p build/ios
+          godot --headless --export-debug "iOS" build/ios/satan.zip
+          mkdir -p build/ios/xcode
+          unzip -q build/ios/satan.zip -d build/ios/xcode
+
+      - name: Compile and Package IPA
+        run: |
+          cd build/ios/xcode
+          # Сборка проекта без подписи
+          xcodebuild -project godot_apple_embedded.xcodeproj \
+            -scheme godot_apple_embedded \
+            -configuration Debug \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+          mkdir -p Payload
+          cp -R build/Build/Products/Debug-iphoneos/*.app Payload/
+          zip -qr SATAN.ipa Payload
+
+
+      - name: Upload IPA Artifact for Sideloadly
+        uses: actions/upload-artifact@v4
+        with:
+          name: SATAN-iOS-IPA
+          path: build/ios/xcode/SATAN.ipa
+          retention-days: 7

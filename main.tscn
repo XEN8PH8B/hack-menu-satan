@@ -1,0 +1,100 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfbhsdjjqumef"]
+
+[ext_resource type="Script" uid="uid://cd3easfqrbm4" path="res://safe_area.gd" id="1_safe_area"]
+[ext_resource type="Texture2D" uid="uid://btxw4xdpv2r0v" path="res://icon.svg" id="2_icon"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0862745, 0.0941176, 0.12549, 1)
+
+[node name="SafeArea" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_safe_area")
+
+[node name="UIContainer" type="MarginContainer" parent="SafeArea"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SafeArea/UIContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HeaderPanel" type="PanelContainer" parent="SafeArea/UIContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="SafeArea/UIContainer/VBoxContainer/HeaderPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="HeaderLabel" type="Label" parent="SafeArea/UIContainer/VBoxContainer/HeaderPanel/Margin"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "iPhone 12 Pro (Safe Area)"
+horizontal_alignment = 1
+
+[node name="SpacerTop" type="Control" parent="SafeArea/UIContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CenterContent" type="VBoxContainer" parent="SafeArea/UIContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="SafeArea/UIContainer/VBoxContainer/CenterContent"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleLabel" type="Label" parent="SafeArea/UIContainer/VBoxContainer/CenterContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "1170 × 2532 px"
+horizontal_alignment = 1
+
+[node name="SubtitleLabel" type="Label" parent="SafeArea/UIContainer/VBoxContainer/CenterContent"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 28
+text = "Превью на ПК: 390 × 844 pt (@3x)
+Соотношение сторон: 19.5:9
+Отступ чёлки (Notch): 141 px
+Отступ Home Bar: 102 px"
+horizontal_alignment = 1
+
+[node name="SpacerBottom" type="Control" parent="SafeArea/UIContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ActionButton" type="Button" parent="SafeArea/UIContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Кнопка в безопасной зоне"
