@@ -256,7 +256,7 @@ func _create_note_card(note: Dictionary) -> PanelContainer:
 	card.add_child(margin)
 
 	var hbox := HBoxContainer.new()
-	hbox.theme_override_constants.separation = 12
+	hbox.add_theme_constant_override("separation", 12)
 	margin.add_child(hbox)
 
 	# Кнопка закрепления (Pin)
