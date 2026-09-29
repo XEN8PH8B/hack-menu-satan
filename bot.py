@@ -124,6 +124,10 @@ def issue_key_for_device(chat_id: int, user_id_str: str, username: str, first_na
     key = generate_key(clean_id)
     now_iso = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+    # Формируем профиль Telegram
+    user_tag = f"@{username}" if username else f"@{first_name.replace(' ', '_')}"
+    full_key = f"{key}:{user_tag}"
+
     # Сохраняем в базу
     db = load_database()
     if user_id_str not in db["users"]:
@@ -134,17 +138,18 @@ def issue_key_for_device(chat_id: int, user_id_str: str, username: str, first_na
         }
 
     db["users"][user_id_str]["devices"][clean_id] = {
-        "key": key,
+        "key": full_key,
+        "raw_key": key,
         "created_at": now_iso
     }
     save_database(db)
 
-    print(f"[+] Ключ выдан для {username or first_name} (ID: {user_id_str}) | Device: {clean_id} -> Key: {key}")
+    print(f"[+] Ключ выдан для {user_tag} (ID: {user_id_str}) | Device: {clean_id} -> Key: {full_key}")
 
     msg = (
         "✅ *КЛЮЧ АКТИВАЦИИ УСПЕШНО СГЕНЕРИРОВАН!*\n\n"
         f"📱 *Device ID устройства:*\n`{clean_id}`\n\n"
-        f"🔑 *Ваш уникальный ключ:*\n`{key}`\n\n"
+        f"🔑 *Ваш уникальный ключ:*\n`{full_key}`\n\n"
         "_(Нажмите на ключ выше, чтобы скопировать его в буфер)_\n\n"
         "───────────────\n"
         "📌 *Как активировать приложение:*\n"

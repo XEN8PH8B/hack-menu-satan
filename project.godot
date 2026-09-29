@@ -16,6 +16,9 @@ config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 boot_splash/bg_color=Color(0.04, 0.04, 0.04, 1)
 boot_splash/show_image=false
+boot_splash/image=""
+boot_splash/fullsize=false
+boot_splash/use_filter=false
 
 [autoload]
 

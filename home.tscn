@@ -1,43 +1,86 @@
-[gd_scene load_steps=7 format=3 uid="uid://dxej38p442kym"]
+[gd_scene load_steps=12 format=3 uid="uid://dxej38p442kym"]
 
 [ext_resource type="Script" uid="uid://p4b6lvsndhwn" path="res://home.gd" id="1_home"]
 [ext_resource type="Script" uid="uid://cd3easfqrbm4" path="res://safe_area.gd" id="2_safe_area"]
+[ext_resource type="Script" uid="uid://bs7v472kld2v" path="res://lockpick_dial.gd" id="3_dial"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
-bg_color = Color(0.08, 0.08, 0.08, 0.95)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+bg_color = Color(0.08, 0.08, 0.08, 0.96)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 border_color = Color(0.25, 0.25, 0.25, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_outline"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_white"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_white_pressed"]
+bg_color = Color(0.8, 0.8, 0.8, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_dark"]
 bg_color = Color(0.12, 0.12, 0.12, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.4, 0.4, 0.4, 1)
+border_color = Color(0.3, 0.3, 0.3, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_dark_pressed"]
+bg_color = Color(0.22, 0.22, 0.22, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.7, 0.7, 0.7, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lineedit"]
+bg_color = Color(0.06, 0.06, 0.06, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.35, 0.35, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_outline_pressed"]
-bg_color = Color(0.25, 0.25, 0.25, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.8, 0.8, 0.8, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_banner"]
+bg_color = Color(0.12, 0.12, 0.12, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0, 1.0, 0.45, 0.8)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 8
+
+[sub_resource type="Theme" id="Theme_main"]
 
 [node name="Home" type="Control"]
 layout_mode = 3
@@ -46,6 +89,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_main")
 script = ExtResource("1_home")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -66,85 +110,850 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_safe_area")
 
-[node name="MarginContainer" type="MarginContainer" parent="SafeArea"]
+[node name="ViewsContainer" type="Control" parent="SafeArea"]
 layout_mode = 2
-theme_override_constants/margin_left = 48
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 48
-theme_override_constants/margin_bottom = 32
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SafeArea/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 28
-alignment = 1
+[node name="MainMenuView" type="VBoxContainer" parent="SafeArea/ViewsContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 24
 
-[node name="TitleLabel" type="Label" parent="SafeArea/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 64
-text = "SATAN"
-horizontal_alignment = 1
-
-[node name="StatusBadge" type="Label" parent="SafeArea/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 28
-text = "✓ ПРИЛОЖЕНИЕ АКТИВИРОВАНО"
-horizontal_alignment = 1
-
-[node name="SpacerTop" type="Control" parent="SafeArea/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="DeviceCard" type="PanelContainer" parent="SafeArea/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_card")
-
-[node name="Margin" type="MarginContainer" parent="SafeArea/MarginContainer/VBoxContainer/DeviceCard"]
-layout_mode = 2
-theme_override_constants/margin_left = 28
-theme_override_constants/margin_top = 28
-theme_override_constants/margin_right = 28
-theme_override_constants/margin_bottom = 28
-
-[node name="VBox" type="VBoxContainer" parent="SafeArea/MarginContainer/VBoxContainer/DeviceCard/Margin"]
+[node name="TopBar" type="HBoxContainer" parent="SafeArea/ViewsContainer/MainMenuView"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="InfoLabel" type="Label" parent="SafeArea/MarginContainer/VBoxContainer/DeviceCard/Margin/VBox"]
+[node name="ProfileChip" type="Label" parent="SafeArea/ViewsContainer/MainMenuView/TopBar"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_colors/font_color = Color(0.75, 0.75, 0.75, 1)
 theme_override_font_sizes/font_size = 22
-text = "ПРИВЯЗАННОЕ УСТРОЙСТВО:"
+text = "👤 @Xenophob"
 
-[node name="DeviceIDLabel" type="Label" parent="SafeArea/MarginContainer/VBoxContainer/DeviceCard/Margin/VBox"]
+[node name="Spacer" type="Control" parent="SafeArea/ViewsContainer/MainMenuView/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BalanceChip" type="Label" parent="SafeArea/ViewsContainer/MainMenuView/TopBar"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0, 1.0, 0.45, 1)
+theme_override_font_sizes/font_size = 22
+text = "💳 0 ₴"
+
+[node name="SpacerTop" type="Control" parent="SafeArea/ViewsContainer/MainMenuView"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="HeaderBox" type="VBoxContainer" parent="SafeArea/ViewsContainer/MainMenuView"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TitleLabel" type="Label" parent="SafeArea/ViewsContainer/MainMenuView/HeaderBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 24
-text = "DEVICE-ID"
-autowrap_mode = 1
+theme_override_font_sizes/font_size = 72
+text = "SATAN"
+horizontal_alignment = 1
 
-[node name="PlaceholderLabel" type="Label" parent="SafeArea/MarginContainer/VBoxContainer"]
+[node name="SubtitleLabel" type="Label" parent="SafeArea/ViewsContainer/MainMenuView/HeaderBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
-theme_override_font_sizes/font_size = 22
-text = "Главная сцена приложения (заглушка)
-Здесь будет располагаться основной функционал."
+theme_override_font_sizes/font_size = 20
+text = "CYBER RECON SYSTEM // v1.0.0"
 horizontal_alignment = 1
-autowrap_mode = 2
 
-[node name="SpacerBottom" type="Control" parent="SafeArea/MarginContainer/VBoxContainer"]
+[node name="SpacerMid" type="Control" parent="SafeArea/ViewsContainer/MainMenuView"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ResetButton" type="Button" parent="SafeArea/MarginContainer/VBoxContainer"]
+[node name="MenuButtons" type="VBoxContainer" parent="SafeArea/ViewsContainer/MainMenuView"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="BtnProfile" type="Button" parent="SafeArea/ViewsContainer/MainMenuView/MenuButtons"]
+custom_minimum_size = Vector2(0, 78)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "👤  ПРОФИЛЬ"
+
+[node name="BtnNotes" type="Button" parent="SafeArea/ViewsContainer/MainMenuView/MenuButtons"]
+custom_minimum_size = Vector2(0, 78)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "📝  ЗАМЕТКИ"
+
+[node name="BtnBalance" type="Button" parent="SafeArea/ViewsContainer/MainMenuView/MenuButtons"]
+custom_minimum_size = Vector2(0, 78)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "💳  БАЛАНС"
+
+[node name="BtnUtility" type="Button" parent="SafeArea/ViewsContainer/MainMenuView/MenuButtons"]
+custom_minimum_size = Vector2(0, 84)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.15, 0.15, 0.15, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_white")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_white_pressed")
+text = "⚡  УТИЛИТА"
+
+[node name="SpacerBottom" type="Control" parent="SafeArea/ViewsContainer/MainMenuView"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ResetLicBtn" type="Button" parent="SafeArea/ViewsContainer/MainMenuView"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_font_sizes/font_size = 20
+flat = true
+text = "СБРОСИТЬ АКТИВАЦИЮ (ВЫЙТИ)"
+
+[node name="ProfileView" type="VBoxContainer" parent="SafeArea/ViewsContainer"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 24
+
+[node name="Title" type="Label" parent="SafeArea/ViewsContainer/ProfileView"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "👤 ПРОФИЛЬ ОПЕРАТОРА"
+horizontal_alignment = 1
+
+[node name="Card" type="PanelContainer" parent="SafeArea/ViewsContainer/ProfileView"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="Margin" type="MarginContainer" parent="SafeArea/ViewsContainer/ProfileView/Card"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="SafeArea/ViewsContainer/ProfileView/Card/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TgCaption" type="Label" parent="SafeArea/ViewsContainer/ProfileView/Card/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 20
+text = "TELEGRAM АККАУНТ АВТОРИЗАЦИИ:"
+
+[node name="TgLabel" type="Label" parent="SafeArea/ViewsContainer/ProfileView/Card/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0, 1.0, 0.45, 1)
+theme_override_font_sizes/font_size = 32
+text = "@Xenophob"
+
+[node name="DevCaption" type="Label" parent="SafeArea/ViewsContainer/ProfileView/Card/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 20
+text = "ПРИВЯЗАННЫЙ DEVICE ID:"
+
+[node name="DeviceLabel" type="Label" parent="SafeArea/ViewsContainer/ProfileView/Card/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_font_sizes/font_size = 22
+text = "DEV-ID"
+autowrap_mode = 1
+
+[node name="StatsCard" type="PanelContainer" parent="SafeArea/ViewsContainer/ProfileView"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="Margin" type="MarginContainer" parent="SafeArea/ViewsContainer/ProfileView/StatsCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="SafeArea/ViewsContainer/ProfileView/StatsCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Caption" type="Label" parent="SafeArea/ViewsContainer/ProfileView/StatsCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 20
+text = "СТАТИСТИКА ОПЕРАТОРА:"
+
+[node name="StatsLabel" type="Label" parent="SafeArea/ViewsContainer/ProfileView/StatsCard/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Взломано: 0\nВсего выведено: 0 ₴"
+
+[node name="Spacer" type="Control" parent="SafeArea/ViewsContainer/ProfileView"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BackBtn" type="Button" parent="SafeArea/ViewsContainer/ProfileView"]
 custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "← НАЗАД В МЕНЮ"
+
+[node name="NotesView" type="VBoxContainer" parent="SafeArea/ViewsContainer"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="SafeArea/ViewsContainer/NotesView"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "📝 ЗАМЕТКИ"
+horizontal_alignment = 1
+
+[node name="InputBox" type="HBoxContainer" parent="SafeArea/ViewsContainer/NotesView"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="NoteInput" type="LineEdit" parent="SafeArea/ViewsContainer/NotesView/InputBox"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_lineedit")
+placeholder_text = "Новая заметка / вставьте данные..."
+clear_button_enabled = true
+
+[node name="PasteNoteBtn" type="Button" parent="SafeArea/ViewsContainer/NotesView/InputBox"]
+custom_minimum_size = Vector2(90, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "📋"
+
+[node name="AddNoteBtn" type="Button" parent="SafeArea/ViewsContainer/NotesView/InputBox"]
+custom_minimum_size = Vector2(90, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_white")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_white_pressed")
+text = "+"
+
+[node name="Scroll" type="ScrollContainer" parent="SafeArea/ViewsContainer/NotesView"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="NotesList" type="VBoxContainer" parent="SafeArea/ViewsContainer/NotesView/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="BackBtn" type="Button" parent="SafeArea/ViewsContainer/NotesView"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "← НАЗАД В МЕНЮ"
+
+[node name="BalanceView" type="VBoxContainer" parent="SafeArea/ViewsContainer"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="SafeArea/ViewsContainer/BalanceView"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "💳 БАЛАНС"
+horizontal_alignment = 1
+
+[node name="MainCard" type="PanelContainer" parent="SafeArea/ViewsContainer/BalanceView"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="Margin" type="MarginContainer" parent="SafeArea/ViewsContainer/BalanceView/MainCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="SafeArea/ViewsContainer/BalanceView/MainCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Caption" type="Label" parent="SafeArea/ViewsContainer/BalanceView/MainCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 20
+text = "ДОСТУПНЫЕ СРЕДСТВА SATAN PAY:"
+horizontal_alignment = 1
+
+[node name="AmountLabel" type="Label" parent="SafeArea/ViewsContainer/BalanceView/MainCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0, 1.0, 0.45, 1)
+theme_override_font_sizes/font_size = 56
+text = "0 ₴"
+horizontal_alignment = 1
+
+[node name="StatsCard" type="PanelContainer" parent="SafeArea/ViewsContainer/BalanceView"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="Margin" type="MarginContainer" parent="SafeArea/ViewsContainer/BalanceView/StatsCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="SafeArea/ViewsContainer/BalanceView/StatsCard/Margin"]
+layout_mode = 2
+
+[node name="StatsLabel" type="Label" parent="SafeArea/ViewsContainer/BalanceView/StatsCard/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Всего заработано: 0 ₴\nВзломано: 0"
+
+[node name="HistoryCaption" type="Label" parent="SafeArea/ViewsContainer/BalanceView"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 20
+text = "ИСТОРИЯ ОПЕРАЦИЙ:"
+
+[node name="HistoryScroll" type="ScrollContainer" parent="SafeArea/ViewsContainer/BalanceView"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HistoryList" type="VBoxContainer" parent="SafeArea/ViewsContainer/BalanceView/HistoryScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="BackBtn" type="Button" parent="SafeArea/ViewsContainer/BalanceView"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "← НАЗАД В МЕНЮ"
+
+[node name="UtilityHubView" type="VBoxContainer" parent="SafeArea/ViewsContainer"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="SafeArea/ViewsContainer/UtilityHubView"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "⚡ УТИЛИТА ВЗЛОМА"
+horizontal_alignment = 1
+
+[node name="TargetCard" type="PanelContainer" parent="SafeArea/ViewsContainer/UtilityHubView"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="Margin" type="MarginContainer" parent="SafeArea/ViewsContainer/UtilityHubView/TargetCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="SafeArea/ViewsContainer/UtilityHubView/TargetCard/Margin"]
+layout_mode = 2
+
+[node name="TargetInfo" type="Label" parent="SafeArea/ViewsContainer/UtilityHubView/TargetCard/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "ТЕКУЩАЯ ЦЕЛЬ: НЕ ОПРЕДЕЛЕНА"
+
+[node name="StepsVBox" type="VBoxContainer" parent="SafeArea/ViewsContainer/UtilityHubView"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="BtnStepBank" type="Button" parent="SafeArea/ViewsContainer/UtilityHubView/StepsVBox"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "1. Доступ к банку"
+
+[node name="BtnStepPass" type="Button" parent="SafeArea/ViewsContainer/UtilityHubView/StepsVBox"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "2. Взлом пароля 🔒"
+
+[node name="BtnStepBal" type="Button" parent="SafeArea/ViewsContainer/UtilityHubView/StepsVBox"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "3. Показать баланс 🔒"
+
+[node name="BtnStepTrans" type="Button" parent="SafeArea/ViewsContainer/UtilityHubView/StepsVBox"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "4. Перевести себе 🔒"
+
+[node name="Spacer" type="Control" parent="SafeArea/ViewsContainer/UtilityHubView"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="NewSessionBtn" type="Button" parent="SafeArea/ViewsContainer/UtilityHubView"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.7, 0.2, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "🔄 НАЧАТЬ НОВУЮ СЕССИЮ"
+
+[node name="BackBtn" type="Button" parent="SafeArea/ViewsContainer/UtilityHubView"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "← ВЫХОД В ГЛАВНОЕ МЕНЮ"
+
+[node name="BankAccessView" type="VBoxContainer" parent="SafeArea/ViewsContainer"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="SafeArea/ViewsContainer/BankAccessView"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "⚡ ДОСТУП К БАНКУ"
+horizontal_alignment = 1
+
+[node name="TerminalCard" type="PanelContainer" parent="SafeArea/ViewsContainer/BankAccessView"]
+custom_minimum_size = Vector2(0, 240)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="Margin" type="MarginContainer" parent="SafeArea/ViewsContainer/BankAccessView/TerminalCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="TerminalLabel" type="Label" parent="SafeArea/ViewsContainer/BankAccessView/TerminalCard/Margin"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0, 1.0, 0.45, 1)
+theme_override_font_sizes/font_size = 22
+text = "СИСТЕМА BRUTEFORCE ГОТОВА К ЗАПУСКУ..."
+autowrap_mode = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="SafeArea/ViewsContainer/BankAccessView"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+show_percentage = false
+
+[node name="StartBruteBtn" type="Button" parent="SafeArea/ViewsContainer/BankAccessView"]
+custom_minimum_size = Vector2(0, 74)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_white")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_white_pressed")
+text = "⚡ НАЧАТЬ ПОДБОР"
+
+[node name="ResultBox" type="VBoxContainer" parent="SafeArea/ViewsContainer/BankAccessView"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Caption" type="Label" parent="SafeArea/ViewsContainer/BankAccessView/ResultBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 20
+text = "ПЕРЕХВАЧЕННАЯ ПОЧТА ЖЕРТВЫ:"
+horizontal_alignment = 1
+
+[node name="ResultEmailLabel" type="Label" parent="SafeArea/ViewsContainer/BankAccessView/ResultBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "user@gmail.com"
+horizontal_alignment = 1
+
+[node name="CopyEmailBtn" type="Button" parent="SafeArea/ViewsContainer/BankAccessView/ResultBox"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_white")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_white_pressed")
+text = "📋 СКОПИРОВАТЬ ПОЧТУ И ПРОДОЛЖИТЬ"
+
+[node name="Spacer" type="Control" parent="SafeArea/ViewsContainer/BankAccessView"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BackBtn" type="Button" parent="SafeArea/ViewsContainer/BankAccessView"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "← ВЫХОД"
+
+[node name="PasswordHackView" type="VBoxContainer" parent="SafeArea/ViewsContainer"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="SafeArea/ViewsContainer/PasswordHackView"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "🔓 ВЗЛОМ ПАРОЛЯ"
+horizontal_alignment = 1
+
+[node name="StepLabel" type="Label" parent="SafeArea/ViewsContainer/PasswordHackView"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 22
+text = "ОСТАНОВИТЕ ИНДИКАТОР В ЦЕЛЕВОЙ ЗОНЕ"
+horizontal_alignment = 1
+
+[node name="DialContainer" type="CenterContainer" parent="SafeArea/ViewsContainer/PasswordHackView"]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+
+[node name="Dial" type="Control" parent="SafeArea/ViewsContainer/PasswordHackView/DialContainer"]
+custom_minimum_size = Vector2(320, 320)
+layout_mode = 2
+script = ExtResource("3_dial")
+
+[node name="StopBtn" type="Button" parent="SafeArea/ViewsContainer/PasswordHackView"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_white")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_white_pressed")
+text = "🛑 СТОП (ЗАФИКСИРОВАТЬ)"
+
+[node name="ResultBox" type="VBoxContainer" parent="SafeArea/ViewsContainer/PasswordHackView"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Caption" type="Label" parent="SafeArea/ViewsContainer/PasswordHackView/ResultBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 20
+text = "РАСШИФРОВАННЫЙ ПАРОЛЬ:"
+horizontal_alignment = 1
+
+[node name="ResultPassLabel" type="Label" parent="SafeArea/ViewsContainer/PasswordHackView/ResultBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0, 1.0, 0.45, 1)
+theme_override_font_sizes/font_size = 36
+text = "PassWord123!"
+horizontal_alignment = 1
+
+[node name="CopyPassBtn" type="Button" parent="SafeArea/ViewsContainer/PasswordHackView/ResultBox"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_white")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_white_pressed")
+text = "📋 СКОПИРОВАТЬ ПАРОЛЬ И ПРОДОЛЖИТЬ"
+
+[node name="Spacer" type="Control" parent="SafeArea/ViewsContainer/PasswordHackView"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BackBtn" type="Button" parent="SafeArea/ViewsContainer/PasswordHackView"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "← ВЫХОД"
+
+[node name="ShowBalanceView" type="VBoxContainer" parent="SafeArea/ViewsContainer"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="SafeArea/ViewsContainer/ShowBalanceView"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "💰 СЧЕТ ЖЕРТВЫ"
+horizontal_alignment = 1
+
+[node name="Card" type="PanelContainer" parent="SafeArea/ViewsContainer/ShowBalanceView"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="Margin" type="MarginContainer" parent="SafeArea/ViewsContainer/ShowBalanceView/Card"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 28
+
+[node name="VBox" type="VBoxContainer" parent="SafeArea/ViewsContainer/ShowBalanceView/Card/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="VictimLabel" type="Label" parent="SafeArea/ViewsContainer/ShowBalanceView/Card/Margin/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
 theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn_outline")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_outline_pressed")
-text = "СБРОСИТЬ АКТИВАЦИЮ (ДЛЯ ТЕСТА)"
+text = "Владелец: user@gmail.com"
+horizontal_alignment = 1
+
+[node name="AmountLabel" type="Label" parent="SafeArea/ViewsContainer/ShowBalanceView/Card/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0, 1.0, 0.45, 1)
+theme_override_font_sizes/font_size = 56
+text = "0 ₴"
+horizontal_alignment = 1
+
+[node name="MillionaireBadge" type="Label" parent="SafeArea/ViewsContainer/ShowBalanceView/Card/Margin/VBox"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1.0, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 24
+text = "👑 ДЖЕКПОТ! ЦЕЛЬ — МИЛЛИОНЕР!"
+horizontal_alignment = 1
+
+[node name="GoToTransferBtn" type="Button" parent="SafeArea/ViewsContainer/ShowBalanceView/Card/Margin/VBox"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_white")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_white_pressed")
+text = "💸 ПЕРЕЙТИ К ПЕРЕВОДУ СРЕДСТВ"
+
+[node name="Spacer" type="Control" parent="SafeArea/ViewsContainer/ShowBalanceView"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BackBtn" type="Button" parent="SafeArea/ViewsContainer/ShowBalanceView"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "← ВЫХОД"
+
+[node name="TransferView" type="VBoxContainer" parent="SafeArea/ViewsContainer"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="SafeArea/ViewsContainer/TransferView"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "💸 ПЕРЕВЕСТИ СЕБЕ"
+horizontal_alignment = 1
+
+[node name="Card" type="PanelContainer" parent="SafeArea/ViewsContainer/TransferView"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="Margin" type="MarginContainer" parent="SafeArea/ViewsContainer/TransferView/Card"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="SafeArea/ViewsContainer/TransferView/Card/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="AvailLabel" type="Label" parent="SafeArea/ViewsContainer/TransferView/Card/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 22
+text = "Доступно для вывода: 0 ₴"
+horizontal_alignment = 1
+
+[node name="QuickBtns" type="HBoxContainer" parent="SafeArea/ViewsContainer/TransferView/Card/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Btn25" type="Button" parent="SafeArea/ViewsContainer/TransferView/Card/Margin/VBox/QuickBtns"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "25%"
+
+[node name="Btn50" type="Button" parent="SafeArea/ViewsContainer/TransferView/Card/Margin/VBox/QuickBtns"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "50%"
+
+[node name="Btn100" type="Button" parent="SafeArea/ViewsContainer/TransferView/Card/Margin/VBox/QuickBtns"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "100% ВСЕ"
+
+[node name="AmountInput" type="LineEdit" parent="SafeArea/ViewsContainer/TransferView/Card/Margin/VBox"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_lineedit")
+placeholder_text = "Сумма в ₴..."
+alignment = 1
+
+[node name="ExecTransferBtn" type="Button" parent="SafeArea/ViewsContainer/TransferView/Card/Margin/VBox"]
+custom_minimum_size = Vector2(0, 74)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_white")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_white_pressed")
+text = "💸 ПЕРЕВЕСТИ НА СВОЙ БАЛАНС"
+
+[node name="NewSessionBtn" type="Button" parent="SafeArea/ViewsContainer/TransferView"]
+visible = false
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.7, 0.2, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "🔄 НОВАЯ СЕССИЯ (СЛЕДУЮЩИЙ ЧЕЛОВЕК)"
+
+[node name="Spacer" type="Control" parent="SafeArea/ViewsContainer/TransferView"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BackBtn" type="Button" parent="SafeArea/ViewsContainer/TransferView"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dark")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_dark_pressed")
+text = "← ВЫХОД"
+
+[node name="TopNotificationBanner" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 32.0
+offset_top = 20.0
+offset_right = -32.0
+offset_bottom = 120.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_banner")
+
+[node name="Margin" type="MarginContainer" parent="TopNotificationBanner"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="HBox" type="HBoxContainer" parent="TopNotificationBanner/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Icon" type="Label" parent="TopNotificationBanner/Margin/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "🔔"
+
+[node name="VBox" type="VBoxContainer" parent="TopNotificationBanner/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="NotifTitle" type="Label" parent="TopNotificationBanner/Margin/HBox/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "УВЕДОМЛЕНИЕ"
+
+[node name="NotifBody" type="Label" parent="TopNotificationBanner/Margin/HBox/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 18
+text = "Текст уведомления"
+autowrap_mode = 2
 
 [node name="FadeOverlay" type="ColorRect" parent="."]
 layout_mode = 1

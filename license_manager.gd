@@ -16,6 +16,13 @@ static var device_id: String = "":
 			device_id = _resolve_device_id()
 		return device_id
 
+static var tg_profile: String:
+	get:
+		if _cached_tg_profile.is_empty():
+			check_activation()
+		return _cached_tg_profile if not _cached_tg_profile.is_empty() else "@Xenophob"
+
+static var _cached_tg_profile: String = ""
 static var is_active: bool = false
 
 
@@ -50,24 +57,44 @@ static func generate_key(p_device_id: String) -> String:
 	]
 
 
-## Нормализация введенного пользователем ключа (очистка от пробелов)
-static func normalize_key(input_key: String) -> String:
-	var cleaned := input_key.strip_edges().to_upper()
+## Извлечение чистой хэш-части ключа (до двоеточия)
+static func extract_raw_key(input_key: String) -> String:
+	var cleaned := input_key.strip_edges()
 	cleaned = cleaned.replace(" ", "").replace("\t", "").replace("\n", "").replace("\r", "")
-	return cleaned
+	if ":" in cleaned:
+		return cleaned.split(":")[0].to_upper()
+	return cleaned.to_upper()
+
+
+## Извлечение профиля Telegram (после двоеточия)
+static func extract_profile(input_key: String) -> String:
+	var cleaned := input_key.strip_edges()
+	if ":" in cleaned:
+		var parts := cleaned.split(":")
+		if parts.size() > 1:
+			var prof := parts[1].strip_edges()
+			if not prof.is_empty():
+				if not prof.begins_with("@"):
+					prof = "@" + prof
+				return prof
+	return "@Xenophob"
 
 
 ## Проверка валидности ключа для текущего устройства
 static func validate_key(input_key: String) -> bool:
+	var raw_key := extract_raw_key(input_key)
 	var expected_key := generate_key(device_id)
-	return normalize_key(input_key) == expected_key
+	return raw_key == expected_key
 
 
 ## Активация приложения по введенному ключу
 static func activate(input_key: String) -> Dictionary:
 	if validate_key(input_key):
 		is_active = true
-		_save_license(normalize_key(input_key))
+		var raw_key := extract_raw_key(input_key)
+		var prof := extract_profile(input_key)
+		_cached_tg_profile = prof
+		_save_license(raw_key, prof)
 		return {"success": true, "error": ""}
 	else:
 		return {
@@ -97,6 +124,7 @@ static func check_activation() -> bool:
 
 	var saved_key: String = test_json.get("key", "")
 	var saved_device: String = test_json.get("device_id", "")
+	_cached_tg_profile = test_json.get("tg_profile", "@Xenophob")
 
 	# Ключ должен строго совпадать с текущим устройством
 	if saved_device == device_id and validate_key(saved_key):
@@ -108,10 +136,11 @@ static func check_activation() -> bool:
 
 
 ## Сохранение лицензии на диск
-static func _save_license(p_key: String) -> void:
+static func _save_license(p_key: String, p_profile: String) -> void:
 	var data := {
 		"device_id": device_id,
 		"key": p_key,
+		"tg_profile": p_profile,
 		"activated_at": Time.get_unix_time_from_system()
 	}
 	var file := FileAccess.open(LICENSE_PATH, FileAccess.WRITE)
